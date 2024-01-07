@@ -136,7 +136,7 @@ public class SingleLinkedList<T> {
 - 이중 연결 리스트라고도 함
 - 장점 : 양방향으로 연결되어 있어 노드 탐색이 양쪽으로 모두 가능
 - 위와 같은 장점 때문에 대중적으로 쓰이는 방식이다.
-  ![doubly-linked-list](../assets/img/2024-01-07-Linked-List/doubly-linked-list.png)
+  ![doubly-linked-list](/assets/img/2024-01-07-Linked-List/doubly-linked-list.png)
 
 ```java
 public class DoubleLinkedList<T> {
@@ -301,7 +301,7 @@ public class DoubleLinkedList<T> {
   - `void addAll(int index, Collection c)` : 지정한 위치부터 주어진 컬렉션의 데이터를 저장한다.
 
   ```java
-  LinkedList<String> list = new LinkedList<>(Arrays.asList("A", "B", "C")));
+  LinkedList<String> list = new LinkedList<>(Arrays.asList("A", "B", "C"));
 
   // 가장 뒤에 데이터 추가
   list.addLast("new");
