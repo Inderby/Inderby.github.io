@@ -36,7 +36,7 @@ toc_sticky: true
 
 ### Linked List의 데이터 추가 방식
 
-![linked-list-add-node](../assets/img/2024-01-07-Linked-List/linked-list-add-node.png)
+![linked-list-add-node](/assets/img/2024-01-07-Linked-List/linked-list-add-node.png)
 
 - 데이터 삭제는 해당 방식의 역순으로 진행하면 됨
 
