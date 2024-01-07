@@ -12,7 +12,7 @@ toc: true
 ### 큐의 구조
 
 - 가장 먼저 넣은 데이터를 가장 먼저 꺼낼 수 있는 구조
-  ![queue](../assets/img/2024-01-07-queue/queue.png)
+  ![queue](/assets/img/2024-01-07-queue/queue.png)
 - 이를 흔히 **FIFO**(First-In, First-Out) 방식이라고 부른다.
 
 ### 알아둘 용어
@@ -23,7 +23,7 @@ toc: true
 
 ### Java에서 Queue의 계층 구조
 
-![queue-hierarchy](../assets/img/2024-01-07-queue/queue-hierarchy.png)
+![queue-hierarchy](/assets/img/2024-01-07-queue/queue-hierarchy.png)
 
 ### Java에서 Queue 자료구조 사용하기
 
