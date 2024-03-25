@@ -5,7 +5,7 @@ date: 2024-03-22 13:10:03 +0900
 categories: [Book, back-end]
 tags: [back-end, CS, book]
 keywords: [back-end, CS, book]
-description: 아는 만큼 보이는 백엔드 chapter2
+description: 아는 만큼 보이는 백엔드 chapter5
 toc: true
 toc_sticky: true
 ---
