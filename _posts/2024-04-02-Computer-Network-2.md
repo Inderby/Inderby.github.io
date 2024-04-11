@@ -516,6 +516,7 @@ toc_sticky: true
   - Maximum segment size (MSS):
 
     - MSS 옵션은 TCP 세그먼트의 최대 크기를 협상하는 데 사용된다.
+    - connection이 되면 더이상 못바꿈(초기 SYN, SYN+ACK 과정에서 설정)
     - 이 옵션은 4바이트로 구성되며, 옵션 종류 (Kind=2), 옵션 길이 (Length=4), MSS 값으로 이루어진다.
     - MSS 값은 수신자가 수용할 수 있는 최대 세그먼트 크기를 나타낸다.
 
