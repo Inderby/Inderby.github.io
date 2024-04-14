@@ -1,5 +1,5 @@
 ---
-title: [Computer-Network 4. D]
+title: [Computer-Network 4. Delivery and Forwarding of IP Packets]
 author: excelsiorKim
 date: 2024-04-12 20:40:03 +0900
 categories: [CS, ComputerNetwork]
