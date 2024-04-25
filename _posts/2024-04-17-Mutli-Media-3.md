@@ -73,7 +73,7 @@ toc_sticky: true
     ![Mach-Band-Effect-img](/assets/img/2024-04-17-Multi-Media-3/Mach-Band-Effect.png)
 - Mach band effect : 인간의 시각 시스템에서 나타나는 현상 중 하나로, 밝기가 서로 다른 영역이 인접해 있을 때 경계 부분에서 밝기 차이가 과장되어 보이는 효과를 말한다.
   - 인간의 지각 시스템은 다양한 강도 영역의 경계를 중심으로 언더 슈팅하거나 오버 슈팅하는 경향이 있다.
-- 사람의 눈은 초록색의 변화에 민감하기 때문에 4개의 픽셀 중에 파란색과 빨간색의 비율은 동일하지만 초록색의 비율은 둛다 더 많다.
+- 사람의 눈은 초록색의 변화에 민감하기 때문에 4개의 픽셀 중에 파란색과 빨간색의 비율은 동일하지만 초록색의 비율은 둘보다 더 많다.
   - 이러한 패턴을 Bayer mask, Bayer Pattern이라고 부른다
   - 격자형태로 픽셀들이 구성되어 있다.
   - CCD에서는 이러한 패턴을 주로 사용한다.
@@ -234,7 +234,7 @@ toc_sticky: true
   ![Rigid-img](/assets/img/2024-04-17-Multi-Media-3/Rigid.png)
 - Affine
   ![Affine-img](/assets/img/2024-04-17-Multi-Media-3/Affine.png)
-  - Affine의 경우 좀 특별하게
+  - Affine의 경우 좀 특별하게 이미지의 변환 결과를 토대로 역변환을 하여 값을 구한다.
 - 총 정리
   ![Image-Translation-img](/assets/img/2024-04-17-Multi-Media-3/Image-Translations.png)
 
