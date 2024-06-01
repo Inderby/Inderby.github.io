@@ -12,6 +12,8 @@ toc_sticky: true
 
 # Virtual Memory
 
+![Virtual-Memory](/assets/img/2024-05-31-OS-13/Virtual-Memory.png)
+
 - Knuth's estimate : 10%의 code가 전체 실행의 90%를 차지한다.
 - 때문에 locality를 활용하여 virtual memory를 관리하기 위한 Policy를 정한다.
 - 장점 : multi programming의 정도를 높일 수 있다. 메모리 크기에 제약을 벗어날 수 있다.
@@ -144,29 +146,164 @@ toc_sticky: true
 
 ### Thrashing
 
+![Thrashing](/assets/img/2024-05-31-OS-13/Thrashing.png)
+
 - 가상 메모리 시스템에서 발생하는 성능 저하 현상 중 하나로, 과도한 페이지 폴트(Page Fault)로 인해 프로세스의 실행이 지연되는 상태를 말한다.
 - Thrashing이 발생하면 시스템은 페이지 교체에 대부분의 시간을 소비하게 되며, 실제 작업은 거의 진행되지 않는다.
 - 원인
   - 부족한 메모리 자원:
-    - Thrashing은 시스템의 메모리 자원이 프로세스의 요구량보다 부족할 때 발생합니다.
-    - 프로세스들이 실행되기 위해 필요한 페이지들을 메모리에 올리려고 하지만, 메모리 용량이 충분하지 않으면 페이지 폴트가 빈번히 발생합니다.
+    - Thrashing은 시스템의 메모리 자원이 프로세스의 요구량보다 부족할 때 발생한다.
+    - 프로세스들이 실행되기 위해 필요한 페이지들을 메모리에 올리려고 하지만, 메모리 용량이 충분하지 않으면 페이지 폴트가 빈번히 발생한다.
   - 과도한 페이지 폴트:
     - Thrashing 상태에서는 프로세스들이 자주 페이지 폴트를 일으키게 된다.
     - 페이지 폴트가 발생하면 운영체제는 디스크에서 필요한 페이지를 메모리로 로드해야 한다.
-    - 그러나 메모리 부족으로 인해 로드된 페이지는 곧바로 교체되어야 하므로, 다시 페이지 폴트가 발생하는 상황이 반복됩니다.
+    - 그러나 메모리 부족으로 인해 로드된 페이지는 곧바로 교체되어야 하므로, 다시 페이지 폴트가 발생하는 상황이 반복된다.
+- 문제점
 
-CPU 이용률 저하:
+  - CPU 이용률 저하:
+    - Thrashing 상태에서는 프로세스들이 페이지 폴트를 처리하는 데 대부분의 시간을 소비한다.
+    - CPU는 페이지 교체와 관련된 작업에 매우 많은 시간을 할애하게 되므로, 실제 작업을 수행하는 데 사용되는 CPU 시간은 크게 감소한다.
+    - 이로 인해 전체 시스템의 성능이 크게 저하된다.
+  - 프로세스 실행 지연:
 
-Thrashing 상태에서는 프로세스들이 페이지 폴트를 처리하는 데 대부분의 시간을 소비합니다.
-CPU는 페이지 교체와 관련된 작업에 매우 많은 시간을 할애하게 되므로, 실제 작업을 수행하는 데 사용되는 CPU 시간은 크게 감소합니다.
-이로 인해 전체 시스템의 성능이 크게 저하됩니다.
+    - Thrashing으로 인해 프로세스들은 페이지 폴트를 기다리는 데 많은 시간을 소비한다.
+    - 프로세스의 실행이 지연되고, 응답 시간이 길어지며, 사용자에게 시스템이 멈춘 것처럼 느껴질 수 있다.
 
-프로세스 실행 지연:
+  - 시스템 자원 낭비:
+    - Thrashing 상태에서는 디스크 I/O와 CPU 시간이 페이지 교체에 과도하게 사용된다.
+    - 이는 시스템 자원의 낭비를 초래하며, 다른 프로세스의 성능에도 부정적인 영향을 미친다.
 
-Thrashing으로 인해 프로세스들은 페이지 폴트를 기다리는 데 많은 시간을 소비합니다.
-프로세스의 실행이 지연되고, 응답 시간이 길어지며, 사용자에게 시스템이 멈춘 것처럼 느껴질 수 있습니다.
+## Resident Set Policy
 
-시스템 자원 낭비:
+- 가상 메모리 시스템에서 프로세스의 메모리 상주 집합(Resident Set)을 관리하기 위한 정책이다.
+- Resident Set은 프로세스가 현재 메모리에 상주하는 페이지들의 집합을 의미한다.
+- 프로세스의 메모리 요구량과 시스템의 메모리 자원을 고려하여 프로세스의 Resident Set을 동적으로 조정한다.
 
-Thrashing 상태에서는 디스크 I/O와 CPU 시간이 페이지 교체에 과도하게 사용됩니다.
-이는 시스템 자원의 낭비를 초래하며, 다른 프로세스의 성능에도 부정적인 영향을 미칩니다.
+- 목표
+
+  - 메모리 사용 효율성 향상:
+    - Resident Set Policy는 프로세스의 실제 메모리 요구량에 맞게 Resident Set의 크기를 조정한다.
+    - 불필요한 페이지를 메모리에서 제거하고, 필요한 페이지를 메모리에 유지함으로써 메모리 사용 효율성을 높인다.
+  - 페이지 폴트 최소화:
+
+    - Resident Set Policy는 프로세스의 작업 집합(Working Set)을 고려하여 Resident Set을 관리한다.
+    - 작업 집합은 프로세스가 일정 시간 동안 자주 접근하는 페이지들의 집합을 의미한다.
+    - Resident Set에 작업 집합에 속하는 페이지들을 유지함으로써 페이지 폴트를 최소화할 수 있다.
+
+  - Thrashing 방지:
+    - Resident Set Policy는 프로세스 간의 메모리 경쟁을 관리하여 Thrashing을 방지한다.
+    - 프로세스의 Resident Set 크기를 적절히 조정하여 메모리 부족으로 인한 과도한 페이지 폴트를 방지한다.
+
+### Resident Set Policy의 종류
+
+- Fixed Resident Set Size:
+
+  - 프로세스의 Resident Set 크기를 고정된 값으로 설정한다.
+  - 프로세스는 지정된 크기의 Resident Set을 메모리에 상주시킬 수 있다.
+  - 메모리 부족 상황에서는 페이지 교체 알고리즘을 사용하여 Resident Set 내의 페이지를 교체한다.
+
+- Variable Resident Set Size:
+
+  - 프로세스의 Resident Set 크기를 동적으로 조정한다.
+  - 프로세스의 메모리 요구량과 시스템의 메모리 가용성에 따라 Resident Set 크기를 증가시키거나 감소시킨다.
+  - 프로세스의 작업 집합을 고려하여 Resident Set을 관리한다.
+
+- Working Set Model:
+  ![Working-Set-Model](/assets/img/2024-05-31-OS-13/Working-Set-Model.png)
+  ![Working-Set-Model-example](/assets/img/2024-05-31-OS-13/Working-Set-Model-Example.png)
+  - Wi(t, delta) : 특정 시간 t에 지난 delta 구간에서 reference 되어진 page들의 집합
+  - 프로세스의 작업 집합을 기반으로 Resident Set을 관리한다.
+  - 작업 집합 크기를 추정하고, 작업 집합에 속하는 페이지들을 Resident Set에 유지한다.
+  - 작업 집합의 크기에 따라 Resident Set의 크기를 동적으로 조정한다.
+
+### Page-Fault Frequency
+
+![Page-Fault-Frequency](/assets/img/2024-05-31-OS-13/Page-Fault-Frequency.png)
+
+- Page-Fault 빈도에 따른 upper-bound와 lower-bound를 둔다.
+- Page-Fault Frequency가 upper bound보다 높아지면 frame 수를 늘리고, page-fault 수가 lower-bound보다 낮아지면 frame 수를 줄인다.
+
+## Hardware and Control Structures for VM
+
+![Hardware-and-Control-Structure](/assets/img/2024-05-31-OS-13/Hardware-and-Control-Structure.png)
+
+- Page Table Base Register : Table이 커지면서 Table은 메모리에 담기고, Page Table의 Base Address를 저장하는 곳.
+- Page Table Entry의 추가 bit
+
+  - Modify bit : 수정 여부
+  - Present bit : 해당 Page가 메모리에 있나 없나(부분 적재로 인해 필요한 bit)
+    ![Memory-Management-Format](/assets/img/2024-05-31-OS-13/Memory-Management.png)
+
+    - Combined 장점
+      - 최종적으로 Page 단위로 구분하기 때문에 외부 단편화가 없음
+      - Page안에서 논리적으로 구분되기 때문에 Protection이나 Sharing 효과적
+    - Combined 단점
+      - 2개의 table이 필요하고, 복잡성이 올라간다.
+      - 조각마다 마다 마지막 Page에서 내부 단편화 발생
+
+### TLB(Translation Lookaside Buffer)
+
+- Page Table이 메모리에 적재됨에 따라 Memory에 두 번 방문해야 하는 비효율성이 발생(PTE 접근에 1번, 실제 메모리 접근에 1번)
+- 최근에 참조되었던 Page Table Entry를 저장해놓은 cache
+- Virtual address로 접근하기 이전에 MMU에서 TLB를 먼저 접근하여 찾는 데이터가 있으면 바로 Physical Address를 얻음
+- 가상 주소를 물리 주소로 빠르게 변환하기 위한 Cache
+- Check TLB
+  ![Check-TLB](/assets/img/2024-05-31-OS-13/Check-TLB.png)
+  - TLB는 해당 정보를 탑재시킨 특정 Processor에게만 유용한 정보 -> Process Switch 시 TLB Flush 비용 발생
+
+### OS for VM - Translation
+
+![Overview](/assets/img/2024-05-31-OS-13/Overview.png)
+
+## Virtual Memory Issue
+
+### Page size
+
+- Page size가 클 경우
+  - Page Size Entry의 수가 적어진다.
+  - Page Table이 작아지고, 초기 loading은 길어지지만, Locality가 존재한다면 I/O 효율이 좋아진다.
+  - 하지만 내부 단편화가 커지는 단점이 존재한다.
+
+### Faster Translation
+
+- 한번의 메모리 접근에 Page fault가 두번 일어날 수 있다.
+- 이를 해결하기 위해 TLB를 사용하지만 Processor가 바뀔 때 의미 없는 주소가 되어버린다.
+- Solution1. Flush
+  - Process가 바뀔 때 모든 valid bit을 0으로 바꾼다.(cold start)
+- Solution2. ASID(Address Space ID)
+  - TLB를 공유할 수 있도록 PID 정보를 넣는 것
+
+## 더 작은 페이지 테이블을 가지기 위한 기법
+
+1. Combined Paging and Segmentation:
+   ![Combined](/assets/img/2024-05-31-OS-13/Combined.png)
+
+   - Combined Paging and Segmentation은 가상 메모리 관리를 위해 페이징과 세그멘테이션을 결합한 기법이다.
+   - 프로세스의 주소 공간은 세그먼트로 나누어지고, 각 세그먼트는 다시 페이지로 분할된다.
+   - 가상 주소는 세그먼트 번호와 세그먼트 내에서의 페이지 번호, 페이지 내에서의 오프셋으로 구성된다.
+   - 주소 변환 과정에서 세그먼트 테이블과 페이지 테이블이 함께 사용된다.
+   - 세그먼테이션은 프로그램의 논리적 구조를 반영하고, 페이징은 물리 메모리 관리를 효율적으로 수행한다.
+   - 장점 : 메모리 보호, 공유, 동적 할당 등을 제공하며, 페이징의 이점과 세그먼테이션의 이점을 모두 활용할 수 있다.
+   - 단점으로는 복잡한 메모리 관리 구조와 추가적인 메모리 오버헤드가 있다.
+
+2. Hierarchical Paging:
+   ![Hierarchy](/assets/img/2024-05-31-OS-13/Hierarchy.png)
+
+   - Hierarchical Paging은 다단계 페이지 테이블을 사용하여 가상 메모리를 관리하는 기법이다.
+   - 가상 주소 공간을 여러 단계의 페이지 테이블로 나누어 관리한다.
+   - 가상 주소는 페이지 번호와 오프셋으로 구성되며, 페이지 번호는 다시 여러 단계로 나누어진다.
+   - 각 단계의 페이지 테이블은 다음 단계의 페이지 테이블을 가리키는 엔트리를 가지고 있다.
+   - 주소 변환 과정에서는 최상위 단계의 페이지 테이블부터 시작하여 순차적으로 다음 단계의 페이지 테이블을 탐색한다.
+   - 최종 단계의 페이지 테이블에서 실제 물리 메모리 주소를 얻을 수 있다.
+   - Hierarchical Paging은 페이지 테이블의 크기를 줄일 수 있으며, 메모리 사용 효율성을 높일 수 있다.
+   - 단점으로는 주소 변환 과정에서 여러 단계의 페이지 테이블을 탐색해야 하므로 성능 오버헤드가 발생할 수 있다.
+
+3. Inverted Page Table:
+   ![Inverted](/assets/img/2024-05-31-OS-13/Invert.png)
+   - Inverted Page Table은 기존 페이지 테이블과는 달리, 시스템 전체에 대해 하나의 페이지 테이블만 유지하는 기법이다.
+   - 페이지 테이블의 각 엔트리는 물리 메모리의 페이지 프레임 번호와 해당 페이지를 소유한 프로세스의 식별자를 저장한다.
+   - 가상 주소 변환 시, 페이지 테이블을 검색하여 해당 가상 주소를 가진 프로세스의 페이지 프레임 번호를 찾는다.
+   - Inverted Page Table은 페이지 테이블의 크기를 물리 메모리의 크기에 비례하도록 유지할 수 있다.
+   - 장점 : 페이지 테이블의 크기를 줄일 수 있으며, 시스템 전체의 메모리 관리가 간소화된다.
+   - 단점 : 주소 변환 과정에서 페이지 테이블을 검색해야 하므로 성능 오버헤드가 발생할 수 있다.
+     - 또한 공유 메모리와 같은 기능을 지원하기 위해서는 추가적인 자료구조가 필요할 수 있다.
