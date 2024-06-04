@@ -10,9 +10,9 @@ toc: true
 toc_sticky: true
 ---
 
-![filter-img](/assets/img/2024-04-28-Fiter-Log/Filter.png)
-
 # Filter를 통한 로그 설정하는 방법
+
+![filter-img](/assets/img/2024-04-28-Fiter-Log/Filter.png)
 
 - Filter 인터페이스를 구현한 커스텈 필터 클래스를 생성한다.
 

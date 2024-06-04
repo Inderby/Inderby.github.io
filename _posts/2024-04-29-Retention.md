@@ -1,5 +1,5 @@
 ---
-title: [Spring-Retention 이란?]
+title: [@Retention 이란?]
 author: excelsiorKim
 date: 2024-04-29 22:30:03 +0900
 categories: [Spring, Programming]
