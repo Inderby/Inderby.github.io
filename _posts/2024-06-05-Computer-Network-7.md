@@ -1,7 +1,7 @@
 ---
 title: [Computer-Network 7. Unicast Routing Protocols]
 author: excelsiorKim
-date: 2024-06-05 19:40:03 +0900
+date: 2024-06-05 12:40:03 +0900
 categories: [CS, ComputerNetwork]
 tags: [CS, ComputerNetwork]
 keywords: [CS, ComputerNetwork]
