@@ -1,7 +1,7 @@
 ---
 title: [Retention 이란?]
 author: excelsiorKim
-date: 2024-04-29 22:30:03 +0900
+date: 2024-04-29 12:30:03 +0900
 categories: [Spring, Programming]
 tags: [Spring, gradle, Retention, annotation]
 keywords: [Spring, gradle, Retention, annotation]
