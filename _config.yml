@@ -5,7 +5,7 @@ theme: jekyll-theme-chirpy
 
 # Change the following value to '/PROJECT_NAME' ONLY IF your site type is GitHub Pages Project sites
 # and doesn't have a custom domain.
-baseurl: ""
+baseurl: "/"
 
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
@@ -22,7 +22,7 @@ title: yongkong # the main title
 
 tagline: Excelsior # it will display as the sub-title
 
-description: >- # used by seo meta and the atom feed
+description: # used by seo meta and the atom feed
   coding.
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
