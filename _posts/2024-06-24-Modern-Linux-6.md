@@ -341,7 +341,7 @@ systemctl status # cgroup을 트리 형식으로 출력
 | ------- | ----------------------------------------- | ---------------------------------------------------------------------------------- |
 | run     | 컨테이너 실행                             | 엔진에스를 데몬으로 실행하고 종료시 컨테이너 제거: `docker run -d --rm nginx:1.21` |
 | ps      | 컨테이너 나열                             | 모든 컨테이너 나열 : `docker ps -a`                                                |
-| inspect | 저수준 정보 출력                          | 컨테이너 IP 쿼리용: `docker inspect -f '{{.Network Settings.IPAddress}}'`          |
+| inspect | 저수준 정보 출력                          | 컨테이너 IP 쿼리용: `docker inspect -f '{{Network Settings.IPAddress}}'`           |
 | build   | 로컬에서 컨테이너 이미지 생성             | 현재 디렉터리와 태그를 기반으로 이미지 빌드: `docker build -t some:tag .`          |
 | push    | 컨테이너 이미지를 레지스트리로 업로드     | AWS 레지스트리로 푸시 : docker push public.ecr.aws/some:tag                        |
 | pull    | 레지스트리에서 컨테이너 이미지를 다운로드 | AWS 레지스트리에서 풀 : docker pull public.ecr.aws/some:tag                        |
