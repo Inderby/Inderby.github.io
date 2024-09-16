@@ -176,7 +176,7 @@ Data columns (total 8 columns):
  5   Sub_metering_1         object        
  6   Sub_metering_2         object        
  7   Sub_metering_3         float64       
-dtypes: datetime64[ns](1), float64(1), object(6)
+dtypes: datetime64(1), float64(1), object(6)
 memory usage: 126.7+ MB
 ```
 - 추가적으로 `df.isnull().sum()`과 같은 메서드를 활용해서 확인해봤다.
