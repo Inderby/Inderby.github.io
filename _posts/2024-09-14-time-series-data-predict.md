@@ -2,10 +2,10 @@
 title: [단일 시계열 모델 분석(ARIMA)]
 author: excelsiorKim
 date: 2024-09-14 13:30:03 +0900
-categories: [Spring, Batch]
-tags: [Spring, Batch]
-keywords: [Spring, Batch]
-description: 스프링 배치 기초 연습
+categories: [AI, ARIMA]
+tags: [AI, ARIMA]
+keywords: [AI, ARIMA]
+description: 시계열 전력 데이터 분석
 toc: true
 toc_sticky: true
 ---
