@@ -176,7 +176,7 @@ Data columns (total 8 columns):
  5   Sub_metering_1         object        
  6   Sub_metering_2         object        
  7   Sub_metering_3         float64       
-dtypes: datetime64(1), float64(1), object(6)
+dtypes: datetime64[ns](1), float64(1), object(6)
 memory usage: 126.7+ MB
 ```
 - 추가적으로 `df.isnull().sum()`과 같은 메서드를 활용해서 확인해봤다.
@@ -242,7 +242,7 @@ def plot_ts(data, color, alpha, label):
 ```python
 plot_ts(ts_resampled, 'blue', 0.25, 'Original')
 ```
-![graph-image](/assets/img/2024-09-16-arima/original-data-graph.png)
+![graph-image](https://github.com/Inderby/Inderby.github.io/blob/master/assets/img/2024-09-16-arima/original-data-graph.png?raw=true)
 
 ### 시계열 데이터의 정상성 검정 : ADF
 - statsmodels 라이브러리의 adfuller 함수를 통해 검정 실시
@@ -262,6 +262,7 @@ adfuller(ts, autolag='AIC')
 ```
 
 - ADF 결과 중 통계량, p-value, 기각역을 계산하고 출력하는 함수 정의 및 실행
+
 ```python
 def ADF_test(data):
 	# ADF 실시
@@ -320,7 +321,7 @@ def plot_rolling(data, roll_size):
 plot_rolling(ts, 6)
 ```
 
-![rolling-deviation](/assets/img/2024-09-16-arima/rolling-mean-standard-deviation.png)
+![rolling-deviation](https://github.com/Inderby/Inderby.github.io/blob/master/assets/img/2024-09-16-arima/rolling-mean-standard-deviation.png?raw=true)
 
 ### 차분(Differencing)으로 정상 시계열 만들기
 - 방법이 두가지가 있음
@@ -376,7 +377,7 @@ plt.title('Partial AutoCorrelation Function')
 
 plt.tight_layout()
 ```
-![acf-pacf](/assets/img/2024-09-16-arima/acf-pacf.png)
+![acf-pacf](https://github.com/Inderby/Inderby.github.io/blob/master/assets/img/2024-09-16-arima/acf-pacf.png?raw=true)
 - 그래프에서 유추하기로는 `ARIMA(p, d, q)` 중에
   - 최적의 q값(신뢰구간 최초 진입 시점) = ACF(q, MA) = 60
   - 최적의 p값(신뢰구간 최초 진입 시점) = PACF(p, AR) = 23
@@ -423,7 +424,7 @@ def plot_and_error(data, forecast):
 plot_and_error(ts[1:], forecast1)
 ```
 - 출력 결과
-![bench-mark](/assets/img/2024-09-16-arima/bench-mark-test.png)
+![bench-mark](https://github.com/Inderby/Inderby.github.io/blob/master/assets/img/2024-09-16-arima/bench-mark-test.png?raw=true)
 
 - 최적화 파라미터로 ARIMA 실시해보기
 
@@ -439,7 +440,7 @@ plot_and_error(ts[1:], forecast2)
 ```
 
 - 출력 결과
-![optimize](/assets/img/2024-09-16-arima/optimize.png)
+![optimize](https://github.com/Inderby/Inderby.github.io/blob/master/assets/img/2024-09-16-arima/optimize.png?raw=true)
 - MSE가 상대적으로 줄어들었으므로(0.0955 -> 0.0765) 성능의 개선이 이루어졌음을 확인 가능하다.
 
 
@@ -518,7 +519,7 @@ plt.legend()
 plt.show()
 ```
 
-![predict-only-trend](/assets/img/2024-09-16-arima/predict-only-trend.png)
+![predict-only-trend](https://github.com/Inderby/Inderby.github.io/blob/master/assets/img/2024-09-16-arima/predict-only-trend.png?raw=true)
 - 잘 따라가는 것으로 보인다.
 - 이번엔 한 지점에 대한 예측을 진행하고 모델을 업데이트 하는 방식으로 예측을 진행해봤다.(트렌드 이외의 변동 요인들이 모두 반영된다.)
 
@@ -554,7 +555,7 @@ plt.plot(y_pred_df, label='Predicted')
 plt.legend()
 plt.show()
 ```
-![predict](/assets/img/2024-09-16-arima/predict.png)
+![predict](https://github.com/Inderby/Inderby.github.io/blob/master/assets/img/2024-09-16-arima/predict.png?raw=true)
 - 전체적인 주기성, 경향성과 트렌드를 따라가며 합리적인 예측 결과를 보여준다.
 
 ### 모델 오차 계산
