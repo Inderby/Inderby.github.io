@@ -1,5 +1,5 @@
 ---
-title: [단일 시계열 모델 분석(ARIMA)]
+title: [ 단일 시계열 모델 분석-ARIMA ]
 author: excelsiorKim
 date: 2024-09-14 13:30:03 +0900
 categories: [AI, ARIMA]
