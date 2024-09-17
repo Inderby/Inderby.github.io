@@ -148,20 +148,26 @@ toc_sticky: true
 # ARIMA 모델 학습 코드 구현
 
 ### 라이브러리 불러오기
+
 ```python
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+
 ```
 
 ### 데이터 불러오기
 
+
 ```python
 df = pd.read_csv('./household_power_consumption.txt', sep=';', parse_dates=[['Date', 'Time']])
+
 ```
 - 이때 데이터 셋의 형태가 Date와 Time column으로 나눠져 있기 때문에 이를 하나로 합친 `Date_Time`으로 만든다.
 - 데이터 확인하기(결측치 여부 column 타입)
+
+
 ```python
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 2075259 entries, 0 to 2075258
@@ -176,12 +182,15 @@ Data columns (total 8 columns):
  5   Sub_metering_1         object        
  6   Sub_metering_2         object        
  7   Sub_metering_3         float64       
-dtypes: datetime64[ns](1), float64(1), object(6)
+dtypes: datetime64(1), float64(1), object(6)
 memory usage: 126.7+ MB
+
 ```
 - 추가적으로 `df.isnull().sum()`과 같은 메서드를 활용해서 확인해봤다.
 
 - 다음으로 활용할 column만 남기고 날짜를 인덱스로 변환했다.
+
+
 ```python
 ts= df.loc[:, ['Date_Time', 'Global_active_power']]
 ts.index = ts.Date_Time
@@ -204,8 +213,11 @@ Date_Time
 2010-11-26 21:02:00               0.932
 
 [2075259 rows x 1 columns]
+
 ```
 - 데이터 가공
+
+
 ```python
 ts = ts.dropna() # NaN값도 마저 제거
 ts['Global_active_power'] = pd.to_numeric(ts['Global_active_power'], errors='coerce') # str 타입을 float 타입으로 변경
@@ -226,8 +238,11 @@ Date_Time
 2010-11-26             1.178230
 
 [1442 rows x 1 columns]
+
 ```
 - 데이터 분포 시각화
+
+
 ```python
 def plot_ts(data, color, alpha, label):
 
@@ -237,15 +252,21 @@ def plot_ts(data, color, alpha, label):
     plt.ylabel('Mean Consumption')
     plt.legend()
     plt.show()
+
 ```
 - 출력
+
+
 ```python
 plot_ts(ts_resampled, 'blue', 0.25, 'Original')
+
 ```
 ![graph-image](https://github.com/Inderby/Inderby.github.io/blob/master/assets/img/2024-09-16-arima/original-data-graph.png?raw=true)
 
 ### 시계열 데이터의 정상성 검정 : ADF
 - statsmodels 라이브러리의 adfuller 함수를 통해 검정 실시
+
+
 ```python
 from statsmodels.tsa.stattools import adfuller
 ts = ts_resampled.dropna()
@@ -259,9 +280,11 @@ adfuller(ts, autolag='AIC')
   '5%': -2.863592002111143,
   '10%': -2.5678624767365825},
  428.11600249017283) # icbest 라는데 뭔지 모르겠음
+
 ```
 
 - ADF 결과 중 통계량, p-value, 기각역을 계산하고 출력하는 함수 정의 및 실행
+
 
 ```python
 def ADF_test(data):
@@ -298,9 +321,11 @@ Critical Values : {'1%': -3.434996272992033, '5%': -2.863592002111143, '10%': -2
 Test Statistics : -3.6842
 p-value : 0.0043
 ------------------------------
+
 ```
 - 단위근이 존재하므로 비정상 시계열이다.(정상 시계열로 만들어줘야 함)
 - 이동 평균 함수를 이용한 평균 및 표준 편차 분포 시각화
+
 ```python
 def plot_rolling(data, roll_size):
     # 이동평균함수(rolling) - 평균, 표준편차
@@ -319,6 +344,7 @@ def plot_rolling(data, roll_size):
 
 # 함수 실행
 plot_rolling(ts, 6)
+
 ```
 
 ![rolling-deviation](https://github.com/Inderby/Inderby.github.io/blob/master/assets/img/2024-09-16-arima/rolling-mean-standard-deviation.png?raw=true)
@@ -328,6 +354,7 @@ plot_rolling(ts, 6)
   - `.shift()`함수를 이용하기
   - `.diff()`함수 이용하기
 - `.diff()`함수 이용이 더 간단하고 결측치 처리도 한번에 해줌.
+
 
 ```python
 ts_diff2 = ts.diff().dropna()
@@ -344,9 +371,11 @@ Critical Values : {'1%': -3.4349896798463924, '5%': -2.8635890925399354, '10%': 
 Test Statistics : -13.0966
 p-value : 0.0000
 ------------------------------
+
 ```
 
 ### ACF, PACF 실시 및 시각화
+
 ```python
 from statsmodels.tsa.stattools import acf, pacf
 
@@ -376,6 +405,7 @@ plt.axhline(y=confidence, linestyle='--', alpha=0.5)
 plt.title('Partial AutoCorrelation Function')
 
 plt.tight_layout()
+
 ```
 ![acf-pacf](https://github.com/Inderby/Inderby.github.io/blob/master/assets/img/2024-09-16-arima/acf-pacf.png?raw=true)
 - 그래프에서 유추하기로는 `ARIMA(p, d, q)` 중에
@@ -385,6 +415,7 @@ plt.tight_layout()
 
 ### 검증해보기 위한 벤치마크
 - 우선 `ARIMA(1, 0, 1)` 로 실시해보기
+
 ```python
 from statsmodels.tsa.arima.model import ARIMA
 
@@ -402,8 +433,10 @@ model1_fit = model1.fit()
 
 # 전체에 대한 예측 실시
 forecast1 = model1_fit.predict(start=start_idx)
+
 ```
 - 예측 시각화 및 오차함수(MSE)함수 정의 및 실시
+
 ```python
 from sklearn.metrics import mean_squared_error
 
@@ -422,11 +455,13 @@ def plot_and_error(data, forecast):
     print('Mean Squared Error : {:.4f}'.format(mse))
 
 plot_and_error(ts[1:], forecast1)
+
 ```
 - 출력 결과
 ![bench-mark](https://github.com/Inderby/Inderby.github.io/blob/master/assets/img/2024-09-16-arima/bench-mark-test.png?raw=true)
 
 - 최적화 파라미터로 ARIMA 실시해보기
+
 
 ```python
 # 모델 파라미터 최적화 (p=60, d=0, q=23)
@@ -437,6 +472,7 @@ model2_fit = model2.fit()
 forecast2 = model2_fit.predict(start=start_idx)
 # 시각화 및 MSE 연산
 plot_and_error(ts[1:], forecast2)
+
 ```
 
 - 출력 결과
@@ -449,6 +485,7 @@ plot_and_error(ts[1:], forecast2)
   - `pmdarima` 라는 파이썬 라이브러리를 활용함
 
 - 라이브러리 불러온 뒤 최적 차분 찾기
+
 ```python
 import pmdarima as pm
 
@@ -462,11 +499,13 @@ n_diffs = max(kpss_diffs, adf_diffs)
 print(f"Optimized 'd' = {n_diffs}")
 --- 출력 --- 
 Optimized 'd' = 0
+
 ```
 
 ### 최적 파라미터 탐색
 - 필요한 파라미터를 제외하고 기본 값으로 돌리는 것이 AIC 점수가 더 낮게 나왔다.
   - 어차피 early stop 기능으로 인해 차수가 100까지 오르지도 않는다.
+
 ```python
 #model = pm.auto_arima(y=train_1,		# 데이터
 #                      d=n_diffs,	# 차분 (d), 기본값 = None
@@ -500,28 +539,34 @@ Performing stepwise search to minimize aic
  ARIMA(5,0,2)(0,0,0)[0]             : AIC=716.507, Time=0.60 sec
  ARIMA(5,0,4)(0,0,0)[0]             : AIC=550.676, Time=1.20 sec
  ARIMA(4,0,3)(0,0,0)[0] intercept   : AIC=548.674, Time=1.06 sec
+
 ```
 
 ### 예측 및 평가
 - 우선 트렌드만 고려한 예측을 실시해봤다.
+
 ```python
 # 예측 -> 리스트로 변환
 pred = model2.predict(n_periods=len(test)).to_list()
 # 데이터프레임 생성
 test_pred = pd.DataFrame({'test':test, 'pred':pred}, index=test.index)
+
 ```
 - 시각화
+
 ```python
 plt.plot(train, label='Train')
 plt.plot(test, label='Test')
 plt.plot(test_pred.pred, label='Predicted')
 plt.legend()
 plt.show()
+
 ```
 
 ![predict-only-trend](https://github.com/Inderby/Inderby.github.io/blob/master/assets/img/2024-09-16-arima/predict-only-trend.png?raw=true)
 - 잘 따라가는 것으로 보인다.
 - 이번엔 한 지점에 대한 예측을 진행하고 모델을 업데이트 하는 방식으로 예측을 진행해봤다.(트렌드 이외의 변동 요인들이 모두 반영된다.)
+
 
 ```python
 # one point forcast 함수 정의, 신뢰구간도 함께 담아보기
@@ -541,24 +586,30 @@ for new_ob in test:
     pred_upper.append(conf[1])
     pred_lower.append(conf[0])
     model2.update(new_ob)
+
 ```
 - 예측 결과를 데이터 프레임으로 만들기
+
 ```python
 test_pred2 = pd.DataFrame({'test':test, 'pred':y_pred})
 y_pred_df = test_pred2['pred']	# Series로 반환
+
 ```
 - 시각화로 확인
+
 ```python
 plt.plot(train, label='Train')
 plt.plot(test, label='Test')
 plt.plot(y_pred_df, label='Predicted')
 plt.legend()
 plt.show()
+
 ```
 ![predict](https://github.com/Inderby/Inderby.github.io/blob/master/assets/img/2024-09-16-arima/predict.png?raw=true)
 - 전체적인 주기성, 경향성과 트렌드를 따라가며 합리적인 예측 결과를 보여준다.
 
 ### 모델 오차 계산
+
 ```python
 # sklearn으로 MAPE 계산
 from sklearn.metrics import mean_absolute_percentage_error
@@ -572,4 +623,5 @@ print(f"MAPE : {MAPE(test_1, y_pred):.3f}")
 --- 출력 ---
 MAPE : 0.197
 MAPE : 0.197
+
 ```
