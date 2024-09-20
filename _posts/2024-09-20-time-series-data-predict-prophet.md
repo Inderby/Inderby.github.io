@@ -152,6 +152,9 @@ plt.legend()
 plt.show()
 ```
 
+![predict](/assets/img/2024-09-20-prophet/predict-result.png)
+
+
 - 성능 평가
   - 예측 결과를 실제 테스트 데이터와 비교하여 성능을 검증한다.
 
