@@ -18,9 +18,9 @@ timezone: Asia/Seoul
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: yongkong # the main title
+title: YongKong # the main title
 
-tagline: Excelsior # it will display as the sub-title
+tagline: 언제나 겸손하고, 언제나 열린 마음으로, 겸허히 배우고 있습니다. # it will display as the sub-title
 
 description: # used by seo meta and the atom feed
   coding.
