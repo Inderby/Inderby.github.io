@@ -2,7 +2,7 @@
 title: [최근 포스팅을 하지 못하고 있던 이유]
 author: excelsiorKim
 date: 2024-11-13 10:30:03 +0900
-categories: [back-end, kafka]
+categories: [Blogging]
 tags: [Blogging]
 keywords: [Blogging]
 description: 포스팅을 못하고 있던 이유
