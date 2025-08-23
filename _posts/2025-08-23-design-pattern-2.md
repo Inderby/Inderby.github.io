@@ -3,9 +3,9 @@ title: "디자인패턴: Builder 패턴"
 author: Dante
 date: 2025-08-23 11:50:03 +0900
 categories: [design-pattern, software-engineering]
-tags: [design-pattern, solid, oop, clean-code, builder]
-keywords: [design-pattern, solid principles, clean architecture, object-oriented, builder]
-description: "소프트웨어 설계의 기본이 되는 디자인 패턴의 개념과 SOLID 5원칙을 실제 C# 코드 예제와 함께 알아봅니다."
+tags: [design-pattern, builder, clean-code, fluent-builder, functional-builder]
+keywords: [design-pattern, builder, clean-code, fluent-builder, functional-builder]
+description: "Builder 패턴의 특징과 각종 구현 방식에 대해 알아보자."
 toc: true
 toc_sticky: true
 ---
