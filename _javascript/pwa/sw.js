@@ -25,34 +25,21 @@ function verifyUrl(url) {
   return true;
 }
 
-self.addEventListener('install', (event) => {
-  if (purge) {
-    return;
-  }
-
-  event.waitUntil(
-    caches.open(swconf.cacheName).then((cache) => {
-      return cache.addAll(swconf.resources);
-    })
-  );
+self.addEventListener("install", (event) => {
+  self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keyList) => {
-      return Promise.all(
-        keyList.map((key) => {
-          if (purge) {
-            return caches.delete(key);
-          } else {
-            if (key !== swconf.cacheName) {
-              return caches.delete(key);
-            }
-          }
-        })
-      );
-    })
-  );
+self.addEventListener("activate", (event) => {
+  self.registration
+    .unregister()
+    .then(() => self.clients.matchAll())
+    .then((clients) => {
+      clients.forEach((client) => {
+        if (client.url && "navigate" in client) {
+          client.navigate(client.url);
+        }
+      });
+    });
 });
 
 self.addEventListener('message', (event) => {
