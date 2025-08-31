@@ -1,7 +1,7 @@
 ---
 title: "디자인패턴: Adapter 패턴"
 author: Dante
-date: 2025-08-229 18:50:03 +0900
+date: 2025-08-31 18:50:03 +0900
 categories: [design-pattern, software-engineering]
 tags: [design-pattern, adapter , clean-code, generic-factory]
 keywords: [design-pattern, adapter, clean-code, generic-factory]
