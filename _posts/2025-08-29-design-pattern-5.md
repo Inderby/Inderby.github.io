@@ -1,7 +1,7 @@
 ---
 title: "디자인패턴: Singleton 패턴"
 author: Dante
-date: 2025-08-229 18:50:03 +0900
+date: 2025-08-29 18:50:03 +0900
 categories: [design-pattern, software-engineering]
 tags: [design-pattern, singleton , clean-code, abstract-factory]
 keywords: [design-pattern, singleton, clean-code, abstract-factory]
